@@ -8,9 +8,26 @@ class Signup extends Component {
     username: '',
     password: '',
     retype: '',
-    zipcode: 0
+    zipcode: 0,
+    badpw: false,
+    bademail: false
   }
 
+  handleChange = (event, {name, value}) => {
+    this.setState({ [name]: value });
+}
+
+signupUser = (e) => {
+  e.preventDefault()
+  if (this.state.password !== this.state.retype) {
+    // clear state when passwords don't matach
+    this.setState({
+      badpw: true,
+      password: "",
+      retype: ""
+    })
+  }
+}
   render() {
     return (
       <div className="login">
@@ -20,10 +37,10 @@ class Signup extends Component {
       </Header>
         <Form onSubmit={this.signupUser}>
         <Form.Group widths='equal' inline >
-          <Form.Input placeholder="User name" onChange={this.handleChangeUser} type='text' value={this.state.username} autoFocus/>
-          <Form.Input placeholder="Password" onChange={this.handleChangePw} type='password' value={this.state.password} />
-          <Form.Input placeholder="Retype password" onChange={this.handleRetype} type='password' value={this.state.retype}/>
-          <Form.Input placeholder="Email address" onChange={this.handleChangeEmail} type='text' value={this.state.email} />
+          <Form.Input name="username" placeholder="User name" onChange={this.handleChange} type='text' value={this.state.username} autoFocus/>
+          <Form.Input name="password" placeholder="Password" onChange={this.handleChange} type='password' value={this.state.password} />
+          <Form.Input name="retype" placeholder="Retype password" onChange={this.handleChange} type='password' value={this.state.retype}/>
+          <Form.Input name="zipcode" placeholder="Zipcode" onChange={this.handleChange} type='text' value={this.state.zipcode} />
           <Form.Input type='submit' value='Signup'/>
         </Form.Group>        
        </Form>
