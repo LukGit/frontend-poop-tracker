@@ -73,7 +73,7 @@ signupUser = (e) => {
         </Form.Group>        
        </Form>
        {this.state.badpw ? <Label inverted color='red' pointing>Passwords not matched. Try again.</Label> : null}
-       {this.state.bademail ? <Label inverted color='red' pointing>Please enter valid email address.</Label> : null}
+       {this.state.bademail ? <Label inverted color='red' pointing>Please enter valid email address for username.</Label> : null}
       </div>
     )
   }
@@ -83,7 +83,7 @@ signupUser = (e) => {
     return (
       <div className="login">
       <Header className="pageTitle" as="h1" size="huge" icon inverted>
-        <Icon name="golf ball"/>
+        <Icon name="paw"/>
         Please sign up
       </Header>
         <Form onSubmit={this.signupUser}>

@@ -5,3 +5,9 @@ export const addUser = userData => {
     userData
   };
 };
+export const currentUser = (userData) => {
+  return {
+    type: "CURRENT_USER",
+    userData
+  }
+}

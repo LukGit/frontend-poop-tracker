@@ -9,8 +9,19 @@ const rootReducer = combineReducers({
 
 export default rootReducer;
 
-function usersReducer(state = { user: '', userId: 0}, action) {
-
+function usersReducer(state = { user: '', userId: 0, zipcode: 0}, action) {
+  switch (action.type) {
+    // when login and current_user return the username and id
+    case "LOGIN":
+    case "CURRENT_USER":
+      return {
+        user: action.userData.username,
+        userId: action.userData.id,
+        zipcode: action.userData.zipcode
+      }
+    default:
+      return state
+    }
 }
 
 function reportsReducer(state = [], action) {
