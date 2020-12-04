@@ -21,7 +21,7 @@ class Reports extends Component {
         {this.props.user.user}, 
         {this.props.reports.length > 0 ? "Your Bucket List Courses!" : "No Course in Your Bucket!"}
         </Header> 
-        <MapReports reports={this.props.reports}/>
+        <MapReports reports={this.props.reports} zipcode={this.user.zipcode}/>
       </div>
     )
   }
