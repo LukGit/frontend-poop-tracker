@@ -11,3 +11,9 @@ export const currentUser = (userData) => {
     userData
   }
 }
+export const addReport = reports => {
+  return {
+    type: 'ADD_REPORT',
+    reports
+  };
+};

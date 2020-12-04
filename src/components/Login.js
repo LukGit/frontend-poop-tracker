@@ -33,6 +33,45 @@ class Login extends Component {
     }
   }
 
+  loginUser = (e) => {
+    e.preventDefault()
+    console.log(this.state.username, this.state.password)
+    const USER_URL = 'http://localhost:3000/users'
+    const reqObj = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({username: this.state.username, password: this.state.password})
+    }
+    fetch(USER_URL, reqObj)
+    .then(resp => resp.json())
+    .then(userData => {
+      if (userData.error) {
+        if (userData.error === "Invalid username"){
+          this.props.history.push('/signup')
+        } else {
+        alert(userData.error)
+        }
+      }else {
+        localStorage.setItem("token", userData.jwt)      
+        this.props.addUser(userData)
+        this.getReports(userData.jwt)
+      }
+    })
+  }
+
+  getReports = (token) => {
+    const COURSE_URL = 'http://localhost:3000/reports'
+    fetch(COURSE_URL, {headers: {'Authorization': `Bearer ${token}`}})
+      .then(resp => resp.json())
+      .then(reports => {
+        this.props.addReport(reports)
+        this.props.history.push('/reports')
+    })
+  }
+
+
   handleChange = (event, {name, value}) => {
     this.setState({ [name]: value });
   }
@@ -56,4 +95,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, {addUser, currentUser})(Login)
+export default connect(null, {addUser, currentUser, addReport})(Login)
