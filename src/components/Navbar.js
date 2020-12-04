@@ -8,17 +8,12 @@ import { Menu, Dropdown } from 'semantic-ui-react'
 
 class Navbar extends Component {
   state = {
-    courseList:[],
+    reportList:[],
     courseName: ""
   }
   // when component is initially loaded, set local set with courses from store with course name and id
   componentDidMount () {
-    const cSelect = this.props.courses.map(c => {
-      return {key: `${c.id}`, text: c.name, value: `${c.id}`}
-    })
-    this.setState({
-      courseList: cSelect
-    })
+    
   }
 
   // this handles logout by remocing the token in local storage and calling logoutUser in reducer
@@ -40,31 +35,8 @@ class Navbar extends Component {
     return (
       <Menu inverted color='brown' size='mini'>
         <Menu.Item >
-          {/* this dropdown list all the courses available */}
-          <Dropdown 
-          fluid
-          selection
-          search
-          onChange={this.selectCourse}
-          options={this.state.courseList}
-          style={{width: 200}}
-          size='medium'
-          placeholder='Research Course'
-          /> 
-        </Menu.Item>
-        <Menu.Item >
-          <Link to={'/buckets'} className="item">
-            My List
-          </Link>
-        </Menu.Item>
-        <Menu.Item >
-          <Link to={'/foursomes'} className="item">
-            Foursomes
-          </Link>
-        </Menu.Item>
-        <Menu.Item >
-          <Link to={`/users/edit/${this.props.user.id}`} className="item">
-            Edit Profile
+          <Link to={`/reports/new`} className="item">
+            New Report
           </Link>
         </Menu.Item>
         <Menu.Item position='right'>
