@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Map, Marker, GoogleApiWrapper } from 'google-maps-react';
-import PoopIcon from '../img/poop.png'
+import PoopIconS from '../img/poop-s.png'
+import PoopIconM from '../img/poop-m.png'
+import PoopIconL from '../img/poop-l.png'
 import { withRouter } from 'react-router-dom'
 
 export class MapBuckets extends Component {
@@ -31,9 +33,17 @@ export class MapBuckets extends Component {
       initialCenter={{lat: 25.014313, lng: -95.972535}}
       >
         {this.props.reports.map(r => {
+          let pIcon
+          if (r.size === "S") {
+            pIcon = PoopIconS
+          } else if (r.size === "M") {
+            PIcon = PoopIconM
+          } else {
+            PIcon = PoopIconL
+          }
           return <Marker
           key={r.id}
-          icon={PoopIcon}
+          icon={PIcon}
           position={{lat: r.poop_lat, lng: r.poop_lng }}
           onClick={() => this.handleClick(r.id)}
           >
