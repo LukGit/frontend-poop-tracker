@@ -19,7 +19,7 @@ class Reports extends Component {
         <Header inverted size='medium'> 
         <Icon name='bitbucket square'/>
         {this.props.user.user}, 
-        {this.props.reports.length > 0 ? "Your Bucket List Courses!" : "No Course in Your Bucket!"}
+        {this.props.reports.length > 0 ? "Here Are The Poops In Your Neighborhood!" : "No Poop In Your Neighborhood!"}
         </Header> 
         <MapReports reports={this.props.reports} zipcode={this.user.zipcode}/>
       </div>

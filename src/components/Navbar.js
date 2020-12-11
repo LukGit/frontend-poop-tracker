@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
 import { withRouter } from 'react-router-dom'
-import { Menu, Dropdown } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
 
 class Navbar extends Component {
@@ -20,15 +20,6 @@ class Navbar extends Component {
   handleLogout = event => {
     localStorage.removeItem('token')
     this.props.logoutUser()
-  }
-
-  // this redirects the user to the course selected
-  selectCourse = (e, { value }) => {
-    const cName = this.props.courses.find(f => f.id === parseInt(value)).name
-    this.setState({
-      courseName: cName
-    })
-    this.props.history.push(`/courses/${value}`)
   }
 
   render() {
@@ -51,7 +42,6 @@ class Navbar extends Component {
 
 const mapStateToProps = state => {
   return {
-    courses: state.courses,
     user: state.users
   }
 }
