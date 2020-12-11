@@ -7,18 +7,20 @@ import { withRouter } from 'react-router-dom'
 
 export class MapBuckets extends Component {
   state = {
-    centerGPS: {}
+    centerGPS: {lat: 41.886474, lng: -87.6306216}
   }
   
   componentDidMount () {
-    const G_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY&components=postal_code:" + this.props.zipcode
+    const G_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY&components=postal_code:" + this.props.zipcode.toString()
     fetch(G_URL)
     .then(resp => resp.json())
     .then(location => {
       console.log("zip code gps", location)
-      
+      this.setState({
+        centerGPS: {lat: location.results[0].geometry.location.lat, lng: location.result[0].geometry.location.lng}
       })
-    }
+    })
+  }
   //this redirects to the bucket item page when bucket item on map is clicked
   handleClick = (r_id) => {
     this.props.history.push(`/reports/${r_id}`)
@@ -30,7 +32,7 @@ export class MapBuckets extends Component {
     return (
       <Map google={this.props.google} 
       zoom={3}
-      initialCenter={{lat: 25.014313, lng: -95.972535}}
+      initialCenter={this.state.centerGPS}
       >
         {this.props.reports.map(r => {
           let pIcon
@@ -43,7 +45,7 @@ export class MapBuckets extends Component {
           }
           return <Marker
           key={r.id}
-          icon={PIcon}
+          icon={pIcon}
           position={{lat: r.poop_lat, lng: r.poop_lng }}
           onClick={() => this.handleClick(r.id)}
           >
