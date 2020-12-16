@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addUser } from '../actions'
+import { addReport } from '../actions'
 import { currentUser } from '../actions'
 import { Form, Header, Icon } from 'semantic-ui-react'
 

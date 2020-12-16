@@ -5,7 +5,7 @@ import PoopIconM from '../img/poop-m.png'
 import PoopIconL from '../img/poop-l.png'
 import { withRouter } from 'react-router-dom'
 
-export class MapBuckets extends Component {
+export class MapReports extends Component {
   state = {
     centerGPS: {lat: 41.886474, lng: -87.6306216}
   }
@@ -39,9 +39,9 @@ export class MapBuckets extends Component {
           if (r.size === "S") {
             pIcon = PoopIconS
           } else if (r.size === "M") {
-            PIcon = PoopIconM
+            pIcon = PoopIconM
           } else {
-            PIcon = PoopIconL
+            pIcon = PoopIconL
           }
           return <Marker
           key={r.id}

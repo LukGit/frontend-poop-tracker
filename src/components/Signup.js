@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addUser } from '../actions'
 import { Form, Header, Icon, Label} from 'semantic-ui-react'
 
 class Signup extends Component {
