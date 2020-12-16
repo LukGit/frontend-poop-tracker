@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
 
 export default rootReducer;
 
-function usersReducer(state = { user: '', userId: 0, zipcode: 0}, action) {
+function usersReducer(state = { user: '', userId: 0, zipcode: 0, gps: {}}, action) {
   switch (action.type) {
     // when login and current_user return the username and id
     case "LOGIN":
@@ -17,7 +17,8 @@ function usersReducer(state = { user: '', userId: 0, zipcode: 0}, action) {
       return {
         user: action.userData.username,
         userId: action.userData.id,
-        zipcode: action.userData.zipcode
+        zipcode: action.userData.zipcode,
+        gps: action.userData.gps
       }
     default:
       return state

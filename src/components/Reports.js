@@ -21,7 +21,7 @@ class Reports extends Component {
         {this.props.user.user}, 
         {this.props.reports.length > 0 ? "Here Are The Poops In Your Neighborhood!" : "No Poop In Your Neighborhood!"}
         </Header> 
-        <MapReports reports={this.props.reports} zipcode={this.user.zipcode}/>
+        <MapReports reports={this.props.reports} zipcode={this.props.user.zipcode} gps={this.props.user.gps}/>
       </div>
     )
   }
