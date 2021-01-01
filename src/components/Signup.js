@@ -48,6 +48,7 @@ signupUser = (e) => {
           localStorage.setItem("token", userData.jwt) 
           // add user to the redux store
           this.props.addUser(userData)
+          this.getReports(userData.jwt)
         }
       })
     } else {
@@ -57,6 +58,17 @@ signupUser = (e) => {
     }
   }
 }
+
+getReports = (token) => {
+  const COURSE_URL = 'http://localhost:3000/reports'
+  fetch(COURSE_URL, {headers: {'Authorization': `Bearer ${token}`}})
+    .then(resp => resp.json())
+    .then(reports => {
+      this.props.addReport(reports)
+      this.props.history.push('/reports')
+  })
+}
+
   render() {
     console.log("in signup")
     return (
