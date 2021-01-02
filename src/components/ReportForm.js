@@ -6,19 +6,20 @@ import { Form, Grid, GridRow, Icon, Label, Segment, Button } from 'semantic-ui-r
 import EXIF from "exif-js"
 
 export class ReportForm extends Component {
-  // state = {
-  //   poopGPS: {}
-  // }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      poopGPS: {}
-    };
-
-   this.handleChange = this.handleChange.bind(this);
-
+  state = {
+    poopGPS: {},
+    inFile: ""
   }
+
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     poopGPS: {}
+  //   };
+
+  //  this.handleChange = this.handleChange.bind(this);
+
+  // }
 
   componentDidMount () {
     if (!this.props.userId){
@@ -47,37 +48,58 @@ export class ReportForm extends Component {
     }
   }) => {
     if (file && file.name) {
-      let pGPS = {}
-      EXIF.getData(file, function() {
-        let exifData = EXIF.pretty(this);
-        let gpsLat = EXIF.getTag(this, "GPSLatitude")
-        let gpsLng = EXIF.getTag(this, "GPSLongitude")
-        const latDec = gpsLat[0] + gpsLat[1]/60 + gpsLat[2]/3600
-        const lngDec = (gpsLng[0] + gpsLng[1]/60 + gpsLng[2]/3600) * -1
-        if (exifData) {
-          console.log(exifData);
-          console.log("GPS lat", latDec.toFixed(6))
-          console.log("GPS lng", lngDec.toFixed(6))
-          console.log(EXIF.getTag(this, "Orientation"));
-          pGPS = {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
-          console.log("poop GPS = ", pGPS)
-          this.setState({
-            poopGPS: pGPS
-          })
-        } else {
-          console.log("No EXIF data found in image '" + file.name + "'.")
-        }
-      })
-      console.log("pGPS", pGPS)
       this.setState({
-        poopGPS: pGPS
+        inFile: file
       })
+      console.log("infile =", this.state.inFile)
+      let pGPS = {}
+      // EXIF.getData(file, function() {
+      //   let exifData = EXIF.pretty(this);
+      //   let gpsLat = EXIF.getTag(this, "GPSLatitude")
+      //   let gpsLng = EXIF.getTag(this, "GPSLongitude")
+      //   const latDec = gpsLat[0] + gpsLat[1]/60 + gpsLat[2]/3600
+      //   const lngDec = (gpsLng[0] + gpsLng[1]/60 + gpsLng[2]/3600) * -1
+      //   if (exifData) {
+      //     console.log(exifData);
+      //     console.log("GPS lat", latDec.toFixed(6))
+      //     console.log("GPS lng", lngDec.toFixed(6))
+      //     console.log(EXIF.getTag(this, "Orientation"));
+      //     pGPS = {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
+      //     console.log("poop GPS = ", pGPS)
+      //     this.setState({
+      //       poopGPS: pGPS
+      //     })
+      //   } else {
+      //     console.log("No EXIF data found in image '" + file.name + "'.")
+      //   }
+      // })
+      // console.log("pGPS", pGPS)
+      // this.setState({
+      //   poopGPS: pGPS
+      // })
     }
   }
 
   handleOnSubmit = event => {
     event.preventDefault();
     console.log ("form submitted")
+    EXIF.getData(this.state.inFile, function() {
+      let exifData = EXIF.pretty(this);
+      let gpsLat = EXIF.getTag(this, "GPSLatitude")
+      let gpsLng = EXIF.getTag(this, "GPSLongitude")
+      const latDec = gpsLat[0] + gpsLat[1]/60 + gpsLat[2]/3600
+      const lngDec = (gpsLng[0] + gpsLng[1]/60 + gpsLng[2]/3600) * -1
+      if (exifData) {
+        console.log(exifData);
+        console.log("GPS lat", latDec.toFixed(6))
+        console.log("GPS lng", lngDec.toFixed(6))
+        console.log(EXIF.getTag(this, "Orientation"));
+        const pGPS = {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
+        console.log("poop GPS = ", pGPS)
+      } else {
+        console.log("No EXIF data found in image '" + this.state.inFile.name + "'.")
+      }
+    })
   }
 
   render() {
