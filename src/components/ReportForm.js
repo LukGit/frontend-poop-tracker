@@ -6,9 +6,20 @@ import { Form, Grid, GridRow, Icon, Label, Segment, Button } from 'semantic-ui-r
 import EXIF from "exif-js"
 
 export class ReportForm extends Component {
-  state = {
-    poopGPS: {}
+  // state = {
+  //   poopGPS: {}
+  // }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      poopGPS: {}
+    };
+
+   this.handleChange = this.handleChange.bind(this);
+
   }
+
   componentDidMount () {
     if (!this.props.userId){
       this.props.history.push('/login')
@@ -29,15 +40,6 @@ export class ReportForm extends Component {
     console.log("GPS lng", lngDec.toFixed(6))
     return {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
   }
-
-  // handleOnChange = event => {
-  //   console.log("file loaded", event.target)
-  //   console.log("photo file", event.target.file)
-  //   const { value, name } = event.target;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // }
   
   handleChange = ({
     target: {
@@ -59,6 +61,9 @@ export class ReportForm extends Component {
           console.log(EXIF.getTag(this, "Orientation"));
           pGPS = {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
           console.log("poop GPS = ", pGPS)
+          this.setState({
+            poopGPS: pGPS
+          })
         } else {
           console.log("No EXIF data found in image '" + file.name + "'.")
         }
@@ -70,6 +75,10 @@ export class ReportForm extends Component {
     }
   }
 
+  handleOnSubmit = event => {
+    event.preventDefault();
+    console.log ("form submitted")
+  }
 
   render() {
     return (
@@ -105,7 +114,7 @@ export class ReportForm extends Component {
               <Icon name='check circle'/>
               </Button.Content>
               <Button.Content hidden>
-                Off
+                Submit
               </Button.Content>
             </Button>
            </Form.Field>
