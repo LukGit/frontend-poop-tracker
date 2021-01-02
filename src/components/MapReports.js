@@ -16,7 +16,7 @@ export class MapReports extends Component {
       centerGPS: this.props.gps
     })
   }
-  //this redirects to the bucket item page when bucket item on map is clicked
+  
   handleClick = (r_id) => {
     this.props.history.push(`/reports/${r_id}`)
   }
