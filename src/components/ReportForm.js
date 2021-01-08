@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import { addReport } from '../actions';
-import { Form, Grid, GridRow, Icon, Label, Segment, Button } from 'semantic-ui-react'
+import { Form, Grid, GridRow, Icon, Label, Segment, Button, Dropdown } from 'semantic-ui-react'
 import EXIF from "exif-js"
 
 export class ReportForm extends Component {
@@ -105,7 +105,8 @@ export class ReportForm extends Component {
         fetch(REPORT_URL, reqObj)
         .then(resp => resp.json())
         .then(data => {
-        this.props.history.push('/reports')
+          console.log("where to go")
+        // this.props.history.push('/reports')
     })
       } else {
         console.log("No EXIF data found in image '" + this.state.inFile.name + "'.")
