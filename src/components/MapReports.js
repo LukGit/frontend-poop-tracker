@@ -7,7 +7,8 @@ import { withRouter } from 'react-router-dom'
 
 export class MapReports extends Component {
   state = {
-    centerGPS: {lat: 41.4444, lng: -87.61616959999999}
+    // centerGPS: {lat: 41.4444, lng: -87.61616959999999}
+    centerGPS: this.props.gps
   }
   
   componentDidMount () {
@@ -31,9 +32,9 @@ export class MapReports extends Component {
       >
         {this.props.reports.map(r => {
           let pIcon
-          if (r.size === "S") {
+          if (r.poop_size === "S") {
             pIcon = PoopIconS
-          } else if (r.size === "M") {
+          } else if (r.poop_size === "M") {
             pIcon = PoopIconM
           } else {
             pIcon = PoopIconL
