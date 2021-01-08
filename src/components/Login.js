@@ -66,6 +66,7 @@ class Login extends Component {
             centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
             const newUser = {...userData, gps: centerGPS}
             this.props.addUser(newUser)
+            this.props.history.push('/reports')
           })
         this.getReports(userData.jwt)
       }
@@ -90,7 +91,7 @@ class Login extends Component {
       .then(resp => resp.json())
       .then(reports => {
         this.props.addReport(reports)
-        this.props.history.push('/reports')
+        // this.props.history.push('/reports')
     })
   }
 
