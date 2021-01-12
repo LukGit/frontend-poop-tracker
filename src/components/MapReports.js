@@ -8,13 +8,17 @@ import { withRouter } from 'react-router-dom'
 export class MapReports extends Component {
   state = {
     // centerGPS: {lat: 41.4444, lng: -87.61616959999999}
-    centerGPS: this.props.gps
+    centerGPS: this.props.gps,
+    filterReports: []
   }
   
   componentDidMount () {
     console.log("component did mount", this.props)
+    let filterR = []
+    filterR = this.props.reports.filter(r => r.user.zipcode === this.props.zipcode)
     this.setState({
-      centerGPS: this.props.gps
+      centerGPS: this.props.gps,
+      filterReports: filterR
     })
   }
   
@@ -27,10 +31,10 @@ export class MapReports extends Component {
     console.log(this.state.centerGPS)
     return (
       <Map google={this.props.google} 
-      zoom={16}
+      zoom={14}
       initialCenter={this.state.centerGPS}
       >
-        {this.props.reports.map(r => {
+        {this.state.filterReports.map(r => {
           let pIcon
           if (r.poop_size === "S") {
             pIcon = PoopIconS

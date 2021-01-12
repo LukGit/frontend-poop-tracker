@@ -16,10 +16,10 @@ class Reports extends Component {
       
       <div className="courses">
         <Navbar/>
-        <Header inverted size='medium'> 
-        <Icon name='bitbucket square'/>
+        <Header size='medium' color='brown'> 
+        <Icon name='hand point down'/>
         {this.props.user.user}, 
-        {this.props.reports.length > 0 ? "Here Are The Poops In Your Neighborhood!" : "No Poop In Your Neighborhood!"}
+        {this.props.reports.length > 0 ? " Here Are The Poops In Your Neighborhood!" : "No Poop In Your Neighborhood!"}
         </Header> 
         <MapReports reports={this.props.reports} zipcode={this.props.user.zipcode} gps={this.props.user.gps}/>
       </div>

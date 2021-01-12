@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser } from '../actions'
+import { addUser, addReport } from '../actions'
 import { Form, Header, Icon, Label} from 'semantic-ui-react'
 
 class Signup extends Component {
@@ -93,4 +93,4 @@ getReports = (token) => {
   }
 
 }
-export default connect(null, {addUser})(Signup)
+export default connect(null, {addUser, addReport})(Signup)
