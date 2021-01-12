@@ -84,7 +84,6 @@ export class ReportForm extends Component {
         console.log(exifData);
         console.log("GPS lat", latDec.toFixed(6))
         console.log("GPS lng", lngDec.toFixed(6))
-        console.log(EXIF.getTag(this, "Orientation"));
         const pGPS = {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
         console.log("poop GPS = ", pGPS)
         const REPORT_URL = 'http://localhost:3000/reports'
@@ -114,6 +113,21 @@ export class ReportForm extends Component {
     })
   }
 
+  closeForm = () => {
+    const reqObj = {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    }
+    fetch('http://localhost:3000/reports', reqObj)
+      .then(resp => resp.json())
+      .then(reports => {
+        this.props.addReport(reports)
+        this.props.history.push('/reports')
+      })
+  }
   render() {
     return (
       <div>
@@ -156,6 +170,14 @@ export class ReportForm extends Component {
             </Button>
            </Form.Field>
           </Form>
+          <Button animated='fade' inverted color='grey' size='medium' onClick={this.closeForm}>
+          <Button.Content visible>
+              <Icon name='window close'/>
+              </Button.Content>
+              <Button.Content hidden>
+                Exit
+              </Button.Content>
+            </Button>
           </Segment>
           </GridRow>
         </Grid>

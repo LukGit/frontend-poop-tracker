@@ -46,7 +46,7 @@ class Navbar extends Component {
             New Report
           </Link>
         </Menu.Item>
-        <Menu.Item>
+        {/* <Menu.Item>
           <Button
             animated='fade'
             disabled={false}
@@ -60,7 +60,7 @@ class Navbar extends Component {
             Refresh
             </Button.Content>
           </Button> 
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item position='right'>
           <Link onClick={this.handleLogout}to={'/login'} className="item">
             Sign Out
