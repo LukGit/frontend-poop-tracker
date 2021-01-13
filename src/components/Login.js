@@ -33,7 +33,6 @@ class Login extends Component {
           fetch(G_URL)
           .then(resp => resp.json())
           .then(location => {
-            console.log("zip code gps", location)
             centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
             const newUser = {...user, gps: centerGPS}
             this.props.currentUser(newUser)

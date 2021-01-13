@@ -46,21 +46,6 @@ class Navbar extends Component {
             New Report
           </Link>
         </Menu.Item>
-        {/* <Menu.Item>
-          <Button
-            animated='fade'
-            disabled={false}
-            inverted color="grey"
-            size='medium'
-            onClick={this.refreshData}>
-            <Button.Content visible>
-              <Icon name='bitbucket square'/>
-            </Button.Content>
-            <Button.Content hidden>
-            Refresh
-            </Button.Content>
-          </Button> 
-        </Menu.Item> */}
         <Menu.Item position='right'>
           <Link onClick={this.handleLogout}to={'/login'} className="item">
             Sign Out
@@ -76,5 +61,5 @@ const mapStateToProps = state => {
     user: state.users
   }
 }
-// withRouter is need to route to course page because NavBar is not a component under BrowserRouter in App.js
+// withRouter is need to route to reports page because NavBar is not a component under BrowserRouter in App.js
 export default connect(mapStateToProps, { logoutUser, addReport } )(withRouter(Navbar))

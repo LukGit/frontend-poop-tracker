@@ -6,14 +6,14 @@ import PoopIconL from '../img/poop-l.png'
 import { withRouter } from 'react-router-dom'
 
 export class MapReports extends Component {
+  // map gps center is determined by zip code after login
   state = {
-    // centerGPS: {lat: 41.4444, lng: -87.61616959999999}
     centerGPS: this.props.gps,
     filterReports: []
   }
   
   componentDidMount () {
-    console.log("component did mount", this.props)
+    // filter to show only reports in the same zip code
     let filterR = []
     filterR = this.props.reports.filter(r => r.user.zipcode === this.props.zipcode)
     this.setState({
@@ -25,10 +25,9 @@ export class MapReports extends Component {
   handleClick = (r_id) => {
     this.props.history.push(`/reports/${r_id}`)
   }
-  // this shows a map with all the bucket items as markers on map
-  // each bucket item from store is mapped to a marker on map based on gps of item course
+  // this shows a map with all the poop reports as markers on map
+  // each report item from store is mapped to a marker on map based on gps extracted from report photo
   render() {
-    console.log(this.state.centerGPS)
     return (
       <Map google={this.props.google} 
       zoom={14}

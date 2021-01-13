@@ -79,7 +79,7 @@ getReports = (token) => {
       </Header>
         <Form onSubmit={this.signupUser}>
         <Form.Group widths='equal' inline >
-          <Form.Input name="username" placeholder="User name" onChange={this.handleChange} type='text' value={this.state.username} autoFocus/>
+          <Form.Input name="username" placeholder="User name(email)" onChange={this.handleChange} type='text' value={this.state.username} autoFocus/>
           <Form.Input name="password" placeholder="Password" onChange={this.handleChange} type='password' value={this.state.password} />
           <Form.Input name="retype" placeholder="Retype password" onChange={this.handleChange} type='password' value={this.state.retype}/>
           <Form.Input name="zipcode" placeholder="Zipcode" onChange={this.handleChange} type='text' value={this.state.zipcode} />

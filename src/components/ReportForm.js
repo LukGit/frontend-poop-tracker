@@ -37,16 +37,6 @@ export class ReportForm extends Component {
       })
     }
   }
-
-  getExifGps = (file) => {
-    let gpsLat = EXIF.getTag(file, "GPSLatitude")
-    let gpsLng = EXIF.getTag(file, "GPSLongitude")
-    const latDec = gpsLat[0] + gpsLat[1]/60 + gpsLat[2]/3600
-    const lngDec = (gpsLng[0] + gpsLng[1]/60 + gpsLng[2]/3600) * -1
-    console.log("GPS lat", latDec.toFixed(6))
-    console.log("GPS lng", lngDec.toFixed(6))
-    return {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
-  }
   
   handleChange = ({
     target: {
@@ -57,9 +47,6 @@ export class ReportForm extends Component {
       this.setState({
         inFile: file
       })
-      console.log("infile =", this.state.inFile)
-      let pGPS = {}
-      
     }
   }
 
@@ -95,7 +82,7 @@ export class ReportForm extends Component {
             poop_size: poopSelSize
           })
         }
-        // post course id and user id to buckets path to add bucket
+        // post report with gps and size to repoarts path to add report 
         fetch(REPORT_URL, reqObj)
         .then(resp => resp.json())
         .then(data => {
@@ -109,6 +96,8 @@ export class ReportForm extends Component {
   }
 
   closeForm = () => {
+    // this function is added as a work around to the context issue with "this"
+    // this will redirect to reports path and refresh data
     const reqObj = {
       method: 'GET',
       headers: {
