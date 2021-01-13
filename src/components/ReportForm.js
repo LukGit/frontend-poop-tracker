@@ -70,8 +70,7 @@ export class ReportForm extends Component {
   }
 
   handleOnSubmit = event => {
-    event.preventDefault();
-    console.log ("form submitted")
+    event.preventDefault()
     const userID = this.props.userId
     const poopSelSize = this.state.poopSizeSelect
     EXIF.getData(this.state.inFile, function() {
@@ -81,11 +80,7 @@ export class ReportForm extends Component {
       const latDec = gpsLat[0] + gpsLat[1]/60 + gpsLat[2]/3600
       const lngDec = (gpsLng[0] + gpsLng[1]/60 + gpsLng[2]/3600) * -1
       if (exifData) {
-        console.log(exifData);
-        console.log("GPS lat", latDec.toFixed(6))
-        console.log("GPS lng", lngDec.toFixed(6))
         const pGPS = {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
-        console.log("poop GPS = ", pGPS)
         const REPORT_URL = 'http://localhost:3000/reports'
         const reqObj = {
           method: 'POST',
@@ -146,7 +141,7 @@ export class ReportForm extends Component {
                   onChange={this.handleChange}
                 />
             </Form.Field>
-            <Label inverted color='olive'>Score</Label>
+            <Label inverted color='olive'>Poop Size</Label>
             <Form.Field>
             <Dropdown 
               fluid

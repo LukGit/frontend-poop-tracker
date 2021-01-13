@@ -28,7 +28,20 @@ class Login extends Component {
         if (user.error) {
           this.props.history.push('/login')
         } else {
-          this.props.currentUser(user)
+          let centerGPS
+          const G_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY&components=postal_code:" + user.zipcode.toString()
+          fetch(G_URL)
+          .then(resp => resp.json())
+          .then(location => {
+            console.log("zip code gps", location)
+            centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
+            const newUser = {...user, gps: centerGPS}
+            this.props.currentUser(newUser)
+            this.props.history.push('/reports')
+          })
+          // this.props.currentUser(user)
+          this.getReports(user.jwt)
+          // this.props.history.push('/reports')
         }
       })
     }
@@ -36,7 +49,6 @@ class Login extends Component {
 
   loginUser = (e) => {
     e.preventDefault()
-    console.log(this.state.username, this.state.password)
     const USER_URL = 'http://localhost:3000/users'
     const reqObj = {
       method: 'POST',
