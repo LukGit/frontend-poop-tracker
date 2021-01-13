@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# The Poop Tracker
+
+This is an app for users to report incident of dog poop not picked up by owners. User can take a picture with smart phone that captures GPS location and then report it through the app. Once reported, user can see all the dog poops within the zip code where the user lives (zipcode entered during signup).  
+
+## Technical information
+
+The app's frontend is built in JavaScript with React/Redux framework. The backend is Ruby on Rails with a PostgreSQL DB. All map rendering is done using Google Maps React. Photo GPS information is extracted using EXIF JS. JSON web token is also implemented for user authentication. Styling is impleneted using Sematic UI React with some CSS. 
+
+## General operation
+
+Once logged in, users are greeted with a local map showing markers respresenting the dog poops in their neighborhood. Map is automatically centered based on the registered zipcode of the user. User can click on New Report to report a unpicked-up dog poop. The form requires a photo (with embedded GPS data) to be selected. It also requires user to determine the size of the pile. Once subbmit button is clicked, GPS data will be extracted from photo and report is uploaded to backend. User is required to click the Exit button to close the form. Once closed, user will be an updated map with all the dog poops of various sizes markers. 
+
+
+
+## Technical Notes
+
+In order to use Google Maps, all components must be first imported from google-map-reacts: 
+
+```javascript
+import {Map, InfoWindow, Marker, GoogleApiWrapper, Polyline} from 'google-maps-react';
+```
+An API key obtained in your google account must also be specified in the same container where map and its components are used:
+```javascript
+export default GoogleApiWrapper({
+  apiKey: 'your-api-key-from-google'
+})(MapContainer)
+```
+In order to use Sematic UI react, the following must be specified in the index.html file:
+```html
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+```
+To use EXIF JS, the following must be specified in the index.html file before importing into a component:
+```html
+<script src="vendors/exif-js/exif-js"></script>
+
+```
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
