@@ -1,5 +1,5 @@
 # The Poop Tracker
-
+![alt text](https://github.com/LukGit/frontend-poop-tracker/blob/master/src/img/Poop-track-screen.png?raw=true)
 This is an app for users to report incident of dog poop not picked up by owners. User can take a picture with smart phone that captures GPS location and then report it through the app. Once reported, user can see all the dog poops within the zip code where the user lives (zipcode entered during signup).  
 
 ## Technical information
