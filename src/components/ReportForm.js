@@ -69,26 +69,56 @@ export class ReportForm extends Component {
       if (exifData) {
         const pGPS = {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
         const REPORT_URL = 'http://localhost:3000/reports'
-        const reqObj = {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          body: JSON.stringify({
-            poop_lat: latDec.toFixed(6),
-            poop_lng: lngDec.toFixed(6),
-            user_id: userID,
-            poop_size: poopSelSize
+        // const reqObj = {
+        //   method: 'POST',
+        //   headers: {
+        //     'content-type': 'application/json',
+        //     'Authorization': `Bearer ${localStorage.getItem('token')}`
+        //   },
+        //   body: JSON.stringify({
+        //     poop_lat: latDec.toFixed(6),
+        //     poop_lng: lngDec.toFixed(6),
+        //     user_id: userID,
+        //     poop_size: poopSelSize
+        //   })
+        // }
+        const G_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY&latlng=" + latDec.toFixed(6).toString() + ", " + lngDec.toFixed(6).toString()
+        fetch(G_URL)
+          .then(resp => resp.json())
+          .then(location => {
+            console.log(G_URL)
+            console.log("location data", location.results)
+            // derived zip code can be in different address components array element, therefore must look for postal code type
+            const pzip = location.results[0].address_components.filter(r => r.types[0] === "postal_code")[0].long_name
+            const reqObj = {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              },
+              body: JSON.stringify({
+                poop_lat: latDec.toFixed(6),
+                poop_lng: lngDec.toFixed(6),
+                user_id: userID,
+                poop_size: poopSelSize,
+                poopzip: pzip
+              })
+            }
+            console.log("reqIbj", reqObj)
+            fetch(REPORT_URL, reqObj)
+            .then(resp => resp.json())
+            .then(data => {
+              console.log("where to go")
+            // this.props.history.push('/reports')
+            })
           })
-        }
         // post report with gps and size to repoarts path to add report 
-        fetch(REPORT_URL, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-          console.log("where to go")
-        // this.props.history.push('/reports')
-    })
+        // fetch(REPORT_URL, reqObj)
+        // .then(resp => resp.json())
+        // .then(data => {
+        //   console.log("where to go")
+        // // this.props.history.push('/reports')
+        // })
       } else {
         console.log("No EXIF data found in image '" + this.state.inFile.name + "'.")
       }
