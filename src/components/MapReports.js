@@ -9,7 +9,8 @@ export class MapReports extends Component {
   // map gps center is determined by zip code after login
   state = {
     centerGPS: this.props.gps,
-    filterReports: []
+    filterReports: [],
+    recenterGPS: {}
   }
   
   componentDidMount () {
@@ -22,8 +23,11 @@ export class MapReports extends Component {
     })
   }
   
-  handleClick = (r_id) => {
-    this.props.history.push(`/reports/${r_id}`)
+  handleClick = (r_gps) => {
+    // this.props.history.push(`/reports/${r_id}`)
+    this.setState({
+      recenterGPS: r_gps
+    })
   }
   // this shows a map with all the poop reports as markers on map
   // each report item from store is mapped to a marker on map based on gps extracted from report photo
@@ -32,6 +36,7 @@ export class MapReports extends Component {
       <Map google={this.props.google} 
       zoom={14}
       initialCenter={this.state.centerGPS}
+      center={this.state.recenterGPS}
       >
         {this.state.filterReports.map(r => {
           let pIcon
@@ -46,7 +51,8 @@ export class MapReports extends Component {
           key={r.id}
           icon={pIcon}
           position={{lat: r.poop_lat, lng: r.poop_lng }}
-          onClick={() => this.handleClick(r.id)}
+          // onClick={() => this.handleClick(r.id)}
+          onClick={() => this.handleClick({lat: r.poop_lat, lng: r.poop_lng})}
           >
           </Marker>
         })}
