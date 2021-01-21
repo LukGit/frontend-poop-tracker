@@ -7,16 +7,35 @@ import { Label, Icon, Menu, Dropdown } from 'semantic-ui-react'
 class Reports extends Component {
   state = {
     poopSizeSelect: "",
+    filterReports: [],
     poopSize: [
       {key: 1, text: "Small", value: "S"},
       {key: 2, text: "Medium", value: "M"},
-      {key: 3, text: "Large", value: "L"}
+      {key: 3, text: "Large", value: "L"},
+      {key: 4, text: "All", value: "All"}
     ]
   }
 
-  selectSize = (e, { value }) => {
+  componentDidMount () {
+    // filter to show only reports in the same zip code
+    let filterR = []
+    filterR = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
     this.setState({
-      poopSizeSelect: value
+      centerGPS: this.props.gps,
+      filterReports: filterR
+    })
+  }
+
+  selectSize = (e, { value }) => {
+    let filterX = []
+    if (value === "All") {
+      filterX = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
+    } else {
+      let filterS = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
+      filterX = filterS.filter(r => r.poop_size === value)
+    }
+    this.setState({
+      filterReports: filterX
     })
   }
 
@@ -52,7 +71,8 @@ class Reports extends Component {
           /> 
           </Menu.Item> : null}
         </Menu>
-        <MapReports reports={this.props.reports} zipcode={this.props.user.zipcode} gps={this.props.user.gps}/>
+        {/* <MapReports reports={this.props.reports} zipcode={this.props.user.zipcode} gps={this.props.user.gps}/> */}
+        <MapReports reports={this.state.filterReports} zipcode={this.props.user.zipcode} gps={this.props.user.gps}/>
       </div>
     )
   }

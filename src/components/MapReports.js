@@ -15,12 +15,12 @@ export class MapReports extends Component {
   
   componentDidMount () {
     // filter to show only reports in the same zip code
-    let filterR = []
-    filterR = this.props.reports.filter(r => r.poopzip === this.props.zipcode)
-    this.setState({
-      centerGPS: this.props.gps,
-      filterReports: filterR
-    })
+    // let filterR = []
+    // filterR = this.props.reports.filter(r => r.poopzip === this.props.zipcode)
+    // this.setState({
+    //   centerGPS: this.props.gps,
+    //   filterReports: filterR
+    // })
   }
   
   handleClick = (r_gps) => {
@@ -38,7 +38,7 @@ export class MapReports extends Component {
       initialCenter={this.state.centerGPS}
       center={this.state.recenterGPS}
       >
-        {this.state.filterReports.map(r => {
+        {this.props.reports.map(r => {
           let pIcon
           if (r.poop_size === "S") {
             pIcon = PoopIconS
