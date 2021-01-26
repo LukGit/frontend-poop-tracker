@@ -56,9 +56,10 @@ signupUser = (e) => {
             centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
             const newUser = {...userData, gps: centerGPS}
             this.props.currentUser(newUser)
-            this.props.history.push('/reports')
+            // this.props.history.push('/reports')
+            this.getReports(userData.jwt)
           })
-          this.getReports(userData.jwt)
+          // this.getReports(userData.jwt)
         }
       })
     } else {

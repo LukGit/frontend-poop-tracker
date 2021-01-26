@@ -24,7 +24,6 @@ class Reports extends Component {
     this.setState({
       centerGPS: this.props.gps,
       filterReports: filterR,
-      sizeReport: filterR,
       myZipOnly: true
     })
   }
