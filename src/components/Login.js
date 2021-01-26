@@ -115,7 +115,7 @@ class Login extends Component {
     return (
       <div className="login">
       <Header className="pageTitle" as="h1" size="huge" icon inverted>
-        <Icon name="golf ball"/>
+        <Icon name="paw"/>
         Welcome To The Dog Poop Tracker
       </Header>
         <Form onSubmit={this.loginUser}>

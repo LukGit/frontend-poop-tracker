@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import MapReports from './MapReports'
-import { Label, Icon, Menu, Dropdown } from 'semantic-ui-react'
+import { Label, Icon, Menu, Dropdown, Checkbox } from 'semantic-ui-react'
 
 class Reports extends Component {
   state = {
     poopSizeSelect: "",
     filterReports: [],
+    myZipOnly: true,
     poopSize: [
       {key: 1, text: "Small", value: "S"},
       {key: 2, text: "Medium", value: "M"},
@@ -22,19 +23,40 @@ class Reports extends Component {
     filterR = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
     this.setState({
       centerGPS: this.props.gps,
-      filterReports: filterR
+      filterReports: filterR,
+      sizeReport: filterR,
+      myZipOnly: true
     })
   }
 
   selectSize = (e, { value }) => {
     let filterX = []
-    if (value === "All") {
+    if (this.state.myZipOnly) {
       filterX = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
     } else {
-      let filterS = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
-      filterX = filterS.filter(r => r.poop_size === value)
+      filterX = this.props.reports
+    }
+    let filterS = []
+    if (value === "All") {
+      filterS = filterX
+    } else {
+      // let filterS = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
+      filterS = filterX.filter(r => r.poop_size === value)
     }
     this.setState({
+      filterReports: filterS
+    })
+  }
+
+  handlemyZipOnly = (e, { checked }) => {
+    let filterX = []
+    if (checked) {
+      filterX = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
+    } else {
+      filterX = this.props.reports
+    }
+    this.setState({
+      myZipOnly: checked,
       filterReports: filterX
     })
   }
@@ -54,9 +76,17 @@ class Reports extends Component {
         <Label size='large' color='grey'> 
         <Icon name='hand point down'/>
         {this.props.user.user}, 
-        {this.props.reports.length > 0 ? " Here Are The Poops In Your Neighborhood!" : "No Poop In Your Neighborhood!"}
+        {this.props.reports.length > 0 ? " Here Are The Poops In Your Neighborhood! Zip code: " + this.props.user.zipcode : "No Poop In Your Neighborhood!"}
         </Label> 
         </Menu.Item>
+        {this.props.reports.length > 0 ?
+        <Menu.Item>
+          <Checkbox 
+              checked={this.state.myZipOnly}
+              label='My Zip Only'
+              onClick={this.handlemyZipOnly}
+          /> 
+          </Menu.Item> : null}
         {this.props.reports.length > 0 ?
         <Menu.Item>
         <Dropdown 

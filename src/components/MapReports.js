@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import PoopIconS from '../img/poop-s.png'
 import PoopIconM from '../img/poop-m.png'
 import PoopIconL from '../img/poop-l.png'
@@ -17,10 +17,9 @@ export class MapReports extends Component {
     // filter to show only reports in the same zip code
     // let filterR = []
     // filterR = this.props.reports.filter(r => r.poopzip === this.props.zipcode)
-    // this.setState({
-    //   centerGPS: this.props.gps,
-    //   filterReports: filterR
-    // })
+    this.setState({
+      centerGPS: this.props.gps
+    })
   }
   
   handleClick = (r_gps) => {
@@ -31,10 +30,11 @@ export class MapReports extends Component {
   }
   // this shows a map with all the poop reports as markers on map
   // each report item from store is mapped to a marker on map based on gps extracted from report photo
+ 
   render() {
     return (
       <Map google={this.props.google} 
-      zoom={14}
+      zoom={15}
       initialCenter={this.state.centerGPS}
       center={this.state.recenterGPS}
       >

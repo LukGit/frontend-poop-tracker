@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, addReport } from '../actions'
+import { addUser, addReport, currentUser } from '../actions'
 import { Form, Header, Icon, Label} from 'semantic-ui-react'
 
 class Signup extends Component {
@@ -48,6 +48,16 @@ signupUser = (e) => {
           localStorage.setItem("token", userData.jwt) 
           // add user to the redux store
           this.props.addUser(userData)
+          let centerGPS
+          const G_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY&components=postal_code:" + userData.zipcode.toString()
+          fetch(G_URL)
+          .then(resp => resp.json())
+          .then(location => {
+            centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
+            const newUser = {...userData, gps: centerGPS}
+            this.props.currentUser(newUser)
+            this.props.history.push('/reports')
+          })
           this.getReports(userData.jwt)
         }
       })
@@ -93,4 +103,4 @@ getReports = (token) => {
   }
 
 }
-export default connect(null, {addUser, addReport})(Signup)
+export default connect(null, {addUser, addReport, currentUser})(Signup)
