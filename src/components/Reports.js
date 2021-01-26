@@ -9,6 +9,7 @@ class Reports extends Component {
     poopSizeSelect: "",
     filterReports: [],
     myZipOnly: true,
+    sizeFilter: "All",
     poopSize: [
       {key: 1, text: "Small", value: "S"},
       {key: 2, text: "Medium", value: "M"},
@@ -24,6 +25,7 @@ class Reports extends Component {
     this.setState({
       centerGPS: this.props.gps,
       filterReports: filterR,
+      sizeFilter: "All",
       myZipOnly: true
     })
   }
@@ -43,20 +45,28 @@ class Reports extends Component {
       filterS = filterX.filter(r => r.poop_size === value)
     }
     this.setState({
-      filterReports: filterS
+      filterReports: filterS,
+      sizeFilter: value
     })
   }
 
   handlemyZipOnly = (e, { checked }) => {
+    console.log("size filter", this.state.sizeFilter)
     let filterX = []
     if (checked) {
       filterX = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
     } else {
       filterX = this.props.reports
     }
+    let filterS = []
+    if (this.state.sizeFilter === "All"){
+      filterS = filterX
+    } else {
+      filterS = filterX.filter(r => r.poop_size === this.state.sizeFilter)
+    }
     this.setState({
       myZipOnly: checked,
-      filterReports: filterX
+      filterReports: filterS
     })
   }
 
