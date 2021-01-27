@@ -12,7 +12,7 @@ class Navbar extends Component {
     reportList:[],
     courseName: ""
   }
-  // when component is initially loaded, set local set with courses from store with course name and id
+  
   componentDidMount () {
     
   }
@@ -32,7 +32,7 @@ class Navbar extends Component {
         this.props.history.push('/reports')
       })
   }
-  // this handles logout by remocing the token in local storage and calling logoutUser in reducer
+  // this handles logout by removing the token in local storage and calling logoutUser in reducer
   handleLogout = event => {
     localStorage.removeItem('token')
     this.props.logoutUser()

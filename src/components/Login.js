@@ -36,11 +36,8 @@ class Login extends Component {
             centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
             const newUser = {...user, gps: centerGPS}
             this.props.currentUser(newUser)
-            this.props.history.push('/reports')
+            this.getReports(user.jwt)
           })
-          // this.props.currentUser(user)
-          this.getReports(user.jwt)
-          // this.props.history.push('/reports')
         }
       })
     }
@@ -77,27 +74,14 @@ class Login extends Component {
             centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
             const newUser = {...userData, gps: centerGPS}
             this.props.addUser(newUser)
-            // this.props.history.push('/reports')
             this.getReports(userData.jwt)
           })
-        // this.getReports(userData.jwt)
       }
     })
   }
-
-  // getGPS = (zip) => {
-  //   console.log("get gps", zip)
-  //   const G_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY&components=postal_code:" + zip.toString()
-  //   fetch(G_URL)
-  //   .then(resp => resp.json())
-  //   .then(location => {
-  //     console.log("zip code gps", location)
-
-  //     return {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
-  //   })
-  // }
   
   getReports = (token) => {
+    // this is to get all the poop report and redirect to reports component
     const COURSE_URL = 'http://localhost:3000/reports'
     fetch(COURSE_URL, {headers: {'Authorization': `Bearer ${token}`}})
       .then(resp => resp.json())
@@ -107,8 +91,7 @@ class Login extends Component {
     })
   }
 
-
-  handleChange = (event, {name, value}) => {
+  handleChange = (event, { name, value }) => {
     this.setState({ [name]: value });
   }
 

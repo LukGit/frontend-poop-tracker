@@ -17,16 +17,6 @@ export class ReportForm extends Component {
     ]
   }
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     poopGPS: {}
-  //   };
-
-  //  this.handleChange = this.handleChange.bind(this);
-
-  // }
-
   componentDidMount () {
     if (!this.props.userId){
       this.props.history.push('/login')
@@ -67,21 +57,7 @@ export class ReportForm extends Component {
       const latDec = gpsLat[0] + gpsLat[1]/60 + gpsLat[2]/3600
       const lngDec = (gpsLng[0] + gpsLng[1]/60 + gpsLng[2]/3600) * -1
       if (exifData) {
-        const pGPS = {lat: latDec.toFixed(6), lng: lngDec.toFixed(6)}
         const REPORT_URL = 'http://localhost:3000/reports'
-        // const reqObj = {
-        //   method: 'POST',
-        //   headers: {
-        //     'content-type': 'application/json',
-        //     'Authorization': `Bearer ${localStorage.getItem('token')}`
-        //   },
-        //   body: JSON.stringify({
-        //     poop_lat: latDec.toFixed(6),
-        //     poop_lng: lngDec.toFixed(6),
-        //     user_id: userID,
-        //     poop_size: poopSelSize
-        //   })
-        // }
         const G_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY&latlng=" + latDec.toFixed(6).toString() + ", " + lngDec.toFixed(6).toString()
         fetch(G_URL)
           .then(resp => resp.json())
@@ -109,16 +85,9 @@ export class ReportForm extends Component {
             .then(resp => resp.json())
             .then(data => {
               console.log("where to go")
-            // this.props.history.push('/reports')
+            // cannot use "this" to reference props
             })
           })
-        // post report with gps and size to repoarts path to add report 
-        // fetch(REPORT_URL, reqObj)
-        // .then(resp => resp.json())
-        // .then(data => {
-        //   console.log("where to go")
-        // // this.props.history.push('/reports')
-        // })
       } else {
         console.log("No EXIF data found in image '" + this.state.inFile.name + "'.")
       }

@@ -51,7 +51,6 @@ class Reports extends Component {
   }
 
   handlemyZipOnly = (e, { checked }) => {
-    console.log("size filter", this.state.sizeFilter)
     let filterX = []
     if (checked) {
       filterX = this.props.reports.filter(r => r.poopzip === this.props.user.zipcode)
@@ -110,7 +109,6 @@ class Reports extends Component {
           /> 
           </Menu.Item> : null}
         </Menu>
-        {/* <MapReports reports={this.props.reports} zipcode={this.props.user.zipcode} gps={this.props.user.gps}/> */}
         <MapReports reports={this.state.filterReports} zipcode={this.props.user.zipcode} gps={this.props.user.gps}/>
       </div>
     )
