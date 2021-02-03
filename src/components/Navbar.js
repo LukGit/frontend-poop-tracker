@@ -33,7 +33,7 @@ class Navbar extends Component {
       })
   }
   // this handles logout by removing the token in local storage and calling logoutUser in reducer
-  handleLogout = event => {
+  handleLogout = (e) => {
     localStorage.removeItem('token')
     this.props.logoutUser()
   }

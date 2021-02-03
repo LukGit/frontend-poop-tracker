@@ -14,7 +14,7 @@ class Signup extends Component {
     bademail: false
   }
 
-  handleChange = (event, {name, value}) => {
+handleChange = (e, {name, value}) => {
     this.setState({ [name]: value });
 }
 
@@ -56,10 +56,8 @@ signupUser = (e) => {
             centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
             const newUser = {...userData, gps: centerGPS}
             this.props.currentUser(newUser)
-            // this.props.history.push('/reports')
             this.getReports(userData.jwt)
           })
-          // this.getReports(userData.jwt)
         }
       })
     } else {

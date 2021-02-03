@@ -62,8 +62,6 @@ export class ReportForm extends Component {
         fetch(G_URL)
           .then(resp => resp.json())
           .then(location => {
-            console.log(G_URL)
-            console.log("location data", location.results)
             // derived zip code can be in different address components array element, therefore must look for postal code type
             const pzip = location.results[0].address_components.filter(r => r.types[0] === "postal_code")[0].long_name
             const reqObj = {
@@ -80,7 +78,6 @@ export class ReportForm extends Component {
                 poopzip: pzip
               })
             }
-            console.log("reqIbj", reqObj)
             fetch(REPORT_URL, reqObj)
             .then(resp => resp.json())
             .then(data => {

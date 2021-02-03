@@ -63,14 +63,12 @@ class Login extends Component {
         alert(userData.error)
         }
       }else {
-        localStorage.setItem("token", userData.jwt)  
-        console.log("userData", userData)    
+        localStorage.setItem("token", userData.jwt)   
         let centerGPS
         const G_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY&components=postal_code:" + userData.zipcode.toString()
         fetch(G_URL)
           .then(resp => resp.json())
           .then(location => {
-            console.log("zip code gps", location)
             centerGPS = {lat: location.results[0].geometry.location.lat, lng: location.results[0].geometry.location.lng}
             const newUser = {...userData, gps: centerGPS}
             this.props.addUser(newUser)
