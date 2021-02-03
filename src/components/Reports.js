@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import MapReports from './MapReports'
-import { Label, Icon, Menu, Dropdown, Checkbox } from 'semantic-ui-react'
+import { Label, Icon, Menu, Dropdown, Checkbox, Modal, Button,  } from 'semantic-ui-react'
 
 class Reports extends Component {
   state = {
@@ -15,7 +15,8 @@ class Reports extends Component {
       {key: 2, text: "Medium", value: "M"},
       {key: 3, text: "Large", value: "L"},
       {key: 4, text: "All", value: "All"}
-    ]
+    ],
+    weather: ""
   }
 
   componentDidMount () {
@@ -69,6 +70,20 @@ class Reports extends Component {
     })
   }
 
+  getWeather = (zip) => {
+    const W_URL = "https://api.weatherapi.com/v1/forecast.json?key=0def2099dc364881957133838202806&q=" + zip
+    console.log("weather", W_URL)
+    fetch(W_URL)
+    .then(resp => resp.json())
+    .then(weatherResp => {
+      console.log("weather result", weatherResp)
+      const weather_desc = `Temp: ${weatherResp.current.temp_f}F | ${weatherResp.current.condition.text} | Feels like: ${weatherResp.current.feelslike_f}F |
+       Wind: ${weatherResp.current.wind_mph}mph ${weatherResp.current.wind_dir} | Gust: ${weatherResp.current.gust_mph}mph`
+      this.setState({
+        weather: weather_desc
+      })
+    })
+  }
   // this shows the NavBar and the MapReports which is also passed the report items to display on map
   render() {
     if (!this.props.user.user){
@@ -108,6 +123,22 @@ class Reports extends Component {
               placeholder='Filter by size'
           /> 
           </Menu.Item> : null}
+
+          <Modal size='tiny' trigger={<Menu.Item>
+          <Button animated='fade' 
+          onClick={() => this.getWeather(`${this.props.user.zipcode}`)} size='medium' floated='right' inverted color="grey">
+            <Button.Content visible>
+              <Icon name='sun'/>
+              </Button.Content>
+            <Button.Content hidden>
+            Weather
+            </Button.Content>
+          </Button></Menu.Item>} closeIcon>
+          <Modal.Content>
+            <Label>{this.state.weather}</Label>
+          </Modal.Content>
+        </Modal>
+
         </Menu>
         <MapReports reports={this.state.filterReports} zipcode={this.props.user.zipcode} gps={this.props.user.gps}/>
       </div>

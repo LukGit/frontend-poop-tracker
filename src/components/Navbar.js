@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
 import { withRouter } from 'react-router-dom'
 import { addReport } from '../actions'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Modal, Button, Label, Icon } from 'semantic-ui-react'
 
 
 class Navbar extends Component {
   state = {
     reportList:[],
-    courseName: "",
-    weather: {}
+    courseName: ""
   }
   
   componentDidMount () {
@@ -39,16 +38,6 @@ class Navbar extends Component {
     this.props.logoutUser()
   }
 
-  getWeather = (zip) => {
-    const W_URL = "https://api.weatherapi.com/v1/forecast.json?key=0def2099dc364881957133838202806&q=" + zip
-    fetch(W_URL)
-    .then(resp => resp.json())
-    .then(weatherResp => {
-      this.setState({
-        weather: weatherResp
-      })
-    })
-  }
   render() {
     return (
       <Menu inverted color='brown' size='mini'>
