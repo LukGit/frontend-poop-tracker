@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
 import { withRouter } from 'react-router-dom'
 import { addReport } from '../actions'
-import { Menu, Modal, Button, Label, Icon } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
 
 class Navbar extends Component {

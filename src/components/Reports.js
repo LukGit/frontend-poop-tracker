@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import MapReports from './MapReports'
-import { Label, Icon, Menu, Dropdown, Checkbox, Modal, Button,  } from 'semantic-ui-react'
+import { Label, Icon, Menu, Dropdown, Checkbox, Modal, Button, Header, Item } from 'semantic-ui-react'
 
 class Reports extends Component {
   state = {
@@ -16,7 +16,10 @@ class Reports extends Component {
       {key: 3, text: "Large", value: "L"},
       {key: 4, text: "All", value: "All"}
     ],
-    weather: ""
+    weather: "",
+    weatherIcon: "",
+    forecast: "",
+    forecastIcon: ""
   }
 
   componentDidMount () {
@@ -71,16 +74,22 @@ class Reports extends Component {
   }
 
   getWeather = (zip) => {
-    const W_URL = "https://api.weatherapi.com/v1/forecast.json?key=0def2099dc364881957133838202806&q=" + zip
+    const W_URL = "https://api.weatherapi.com/v1/forecast.json?key=0def2099dc364881957133838202806&days=2&q=" + zip
     console.log("weather", W_URL)
     fetch(W_URL)
     .then(resp => resp.json())
     .then(weatherResp => {
       console.log("weather result", weatherResp)
       const weather_desc = `Temp: ${weatherResp.current.temp_f}F | ${weatherResp.current.condition.text} | Feels like: ${weatherResp.current.feelslike_f}F |
-       Wind: ${weatherResp.current.wind_mph}mph ${weatherResp.current.wind_dir} | Gust: ${weatherResp.current.gust_mph}mph`
+      Wind: ${weatherResp.current.wind_mph}mph ${weatherResp.current.wind_dir} | Gust: ${weatherResp.current.gust_mph}mph`
+      const forecast_desc = `High Temp: ${weatherResp.forecast.forecastday[1].day.maxtemp_f}F | Low Temp: ${weatherResp.forecast.forecastday[1].day.mintemp_f}F | ${weatherResp.forecast.forecastday[1].day.condition.text} | 
+      Rain Chance: ${weatherResp.forecast.forecastday[1].day.daily_chance_of_rain}% | Snow Chance: ${weatherResp.forecast.forecastday[1].day.daily_chance_of_snow}%`
+
       this.setState({
-        weather: weather_desc
+        weather: weather_desc,
+        forecast: forecast_desc,
+        weatherIcon: weatherResp.current.condition.icon,
+        forecastIcon: weatherResp.forecast.forecastday[1].day.condition.icon
       })
     })
   }
@@ -135,7 +144,17 @@ class Reports extends Component {
             </Button.Content>
           </Button></Menu.Item>} closeIcon>
           <Modal.Content>
-            <Label>{this.state.weather}</Label>
+            <Header size='small'>Your Neighborhood Weather and Forecast</Header>
+            <Header size='tiny'>Current Condition</Header>
+            <Item>
+              <Item.Image src={this.state.weatherIcon} size="tiny" />
+            </Item>
+            <Label>{this.state.weather}</Label> 
+            <Header size='tiny'>Tomorrow's Forecast</Header>
+            <Item>
+              <Item.Image src={this.state.forecastIcon} size="tiny" />
+            </Item>
+            <Label>{this.state.forecast}</Label>
           </Modal.Content>
         </Modal>
 
