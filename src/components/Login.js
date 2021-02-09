@@ -107,7 +107,7 @@ class Login extends Component {
           <Form.Input type='submit' value='Login'/>
         </Form.Group>        
        </Form>
-      </div>
+       </div>
     )
   }
 }

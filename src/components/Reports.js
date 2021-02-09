@@ -75,11 +75,9 @@ class Reports extends Component {
 
   getWeather = (zip) => {
     const W_URL = "https://api.weatherapi.com/v1/forecast.json?key=0def2099dc364881957133838202806&days=2&q=" + zip
-    console.log("weather", W_URL)
     fetch(W_URL)
     .then(resp => resp.json())
     .then(weatherResp => {
-      console.log("weather result", weatherResp)
       const weather_desc = `Temp: ${weatherResp.current.temp_f}F | ${weatherResp.current.condition.text} | Feels like: ${weatherResp.current.feelslike_f}F |
       Wind: ${weatherResp.current.wind_mph}mph ${weatherResp.current.wind_dir} | Gust: ${weatherResp.current.gust_mph}mph`
       const forecast_desc = `High Temp: ${weatherResp.forecast.forecastday[1].day.maxtemp_f}F | Low Temp: ${weatherResp.forecast.forecastday[1].day.mintemp_f}F | ${weatherResp.forecast.forecastday[1].day.condition.text} | 
@@ -100,8 +98,7 @@ class Reports extends Component {
       return null
     }
     return (
-      
-      <div className="courses">
+      <div>
         <Navbar/>
         <Menu inverted color='grey' size='mini'>
         <Menu.Item>
@@ -131,9 +128,9 @@ class Reports extends Component {
               size='medium'
               placeholder='Filter by size'
           /> 
-          </Menu.Item> : null}
+        </Menu.Item> : null}
 
-          <Modal size='tiny' trigger={<Menu.Item>
+        <Modal size='tiny' trigger={<Menu.Item>
           <Button animated='fade' 
           onClick={() => this.getWeather(`${this.props.user.zipcode}`)} size='medium' floated='right' inverted color="grey">
             <Button.Content visible>

@@ -79,7 +79,6 @@ getReports = (token) => {
 }
 
   render() {
-    console.log("in signup")
     return (
       <div className="login">
       <Header className="pageTitle" as="h1" size="huge" icon inverted>
