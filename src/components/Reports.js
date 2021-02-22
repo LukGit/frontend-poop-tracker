@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import MapReports from './MapReports'
-import { Label, Icon, Menu, Dropdown, Checkbox, Modal, Button, Header, Item } from 'semantic-ui-react'
+import { Label, Icon, Menu, Dropdown, Checkbox, Modal, Button, Header, Item, Divider } from 'semantic-ui-react'
 
 class Reports extends Component {
   state = {
@@ -19,7 +19,9 @@ class Reports extends Component {
     weather: "",
     weatherIcon: "",
     forecast: "",
-    forecastIcon: ""
+    forecastIcon: "",
+    hourLine1: "",
+    hourLine2: ""
   }
 
   componentDidMount () {
@@ -82,12 +84,33 @@ class Reports extends Component {
       Wind: ${weatherResp.current.wind_mph}mph ${weatherResp.current.wind_dir} | Gust: ${weatherResp.current.gust_mph}mph`
       const forecast_desc = `High Temp: ${weatherResp.forecast.forecastday[1].day.maxtemp_f}F | Low Temp: ${weatherResp.forecast.forecastday[1].day.mintemp_f}F | ${weatherResp.forecast.forecastday[1].day.condition.text} | 
       Rain Chance: ${weatherResp.forecast.forecastday[1].day.daily_chance_of_rain}% | Snow Chance: ${weatherResp.forecast.forecastday[1].day.daily_chance_of_snow}%`
-
+      let d = new Date()
+      let n = d.getHours() + 1
+      let hourLine1 = ""
+      let hourLine2 = ""
+      if (n < 23) {
+        hourLine1 = `${weatherResp.forecast.forecastday[0].hour[n].time} - Temp: ${weatherResp.forecast.forecastday[0].hour[n].temp_f}F | 
+        ${weatherResp.forecast.forecastday[0].hour[n].condition.text} | Feels like: ${weatherResp.forecast.forecastday[0].hour[n].feelslike_f}F`
+        hourLine2 = `${weatherResp.forecast.forecastday[0].hour[n + 1].time} - Temp: ${weatherResp.forecast.forecastday[0].hour[n + 1].temp_f}F | 
+        ${weatherResp.forecast.forecastday[0].hour[n + 1].condition.text} | Feels like: ${weatherResp.forecast.forecastday[0].hour[n + 1].feelslike_f}F`
+      } else if (n === 23) {
+        hourLine1 = `${weatherResp.forecast.forecastday[0].hour[n].time} - Temp: ${weatherResp.forecast.forecastday[0].hour[n].temp_f}F | 
+        ${weatherResp.forecast.forecastday[0].hour[n].condition.text} | Feels like: ${weatherResp.forecast.forecastday[0].hour[n].feelslike_f}F`
+        hourLine2 = `${weatherResp.forecast.forecastday[1].hour[0].time} - Temp: ${weatherResp.forecast.forecastday[1].hour[0].temp_f}F | 
+        ${weatherResp.forecast.forecastday[1].hour[0].condition.text} | Feels like: ${weatherResp.forecast.forecastday[1].hour[0].feelslike_f}F`
+      } else {
+        hourLine1 = `${weatherResp.forecast.forecastday[1].hour[0].time} - Temp: ${weatherResp.forecast.forecastday[1].hour[0].temp_f}F | 
+        ${weatherResp.forecast.forecastday[1].hour[0].condition.text} | Feels like: ${weatherResp.forecast.forecastday[1].hour[0].feelslike_f}F`
+        hourLine2 = `${weatherResp.forecast.forecastday[1].hour[1].time} - Temp: ${weatherResp.forecast.forecastday[1].hour[1].temp_f}F | 
+        ${weatherResp.forecast.forecastday[1].hour[1].condition.text} | Feels like: ${weatherResp.forecast.forecastday[1].hour[1].feelslike_f}F`
+      }
       this.setState({
         weather: weather_desc,
         forecast: forecast_desc,
         weatherIcon: weatherResp.current.condition.icon,
-        forecastIcon: weatherResp.forecast.forecastday[1].day.condition.icon
+        forecastIcon: weatherResp.forecast.forecastday[1].day.condition.icon,
+        hourLine1: hourLine1,
+        hourLine2: hourLine2
       })
     })
   }
@@ -152,6 +175,11 @@ class Reports extends Component {
               <Item.Image src={this.state.forecastIcon} size="tiny" />
             </Item>
             <Label>{this.state.forecast}</Label>
+            <Divider horizontal hidden ></Divider>
+            <Header size='small'>Hourly Forecast</Header>
+            <Label>{this.state.hourLine1}</Label>
+            <Divider horizontal hidden ></Divider>
+            <Label>{this.state.hourLine2}</Label>
           </Modal.Content>
         </Modal>
 
