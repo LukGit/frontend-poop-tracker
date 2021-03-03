@@ -58,7 +58,7 @@ export class MapReports extends Component {
     );
   }
 }
-
+// api key in .env file
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDAAA0HEZLvUa2hQ-54gAG5TXheH1-pEZY'
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY
 })(withRouter(MapReports))
