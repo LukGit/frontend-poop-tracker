@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import MapReports from './MapReports'
-import { Label, Icon, Menu, Dropdown, Checkbox, Modal, Button, Header, Item, Divider } from 'semantic-ui-react'
+import { Label, Icon, Menu, Dropdown, Checkbox, Modal, Button, Item, Popup } from 'semantic-ui-react'
 
 class Reports extends Component {
   state = {
@@ -155,6 +155,7 @@ class Reports extends Component {
         </Menu.Item> : null}
 
         <Modal size='tiny' trigger={<Menu.Item>
+          <Popup content='Click to see local weather forecast' trigger={
           <Button animated='fade' 
           onClick={() => this.getWeather(`${this.props.user.zipcode}`)} size='medium' floated='right' inverted color="grey">
             <Button.Content visible>
@@ -163,7 +164,7 @@ class Reports extends Component {
             <Button.Content hidden>
             Weather
             </Button.Content>
-          </Button></Menu.Item>} closeIcon>
+          </Button>} /></Menu.Item>} closeIcon>
           <Modal.Content>
           <Item.Group>
               <Item>
